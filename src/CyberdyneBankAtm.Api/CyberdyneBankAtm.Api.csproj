@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2119075d-ffa4-4bed-aea4-4c9c5d50644d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\Accounts\" />
+    <Folder Include="Endpoints\Transactions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CyberdyneBankAtm.Application\CyberdyneBankAtm.Application.csproj" />
+    <ProjectReference Include="..\CyberdyneBankAtm.Infrastructure\CyberdyneBankAtm.Infrastructure.csproj" />
+    <ProjectReference Include="..\CyberdyneBankAtm.SharedKernel\CyberdyneBankAtm.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>
