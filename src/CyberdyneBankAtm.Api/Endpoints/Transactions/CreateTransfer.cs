@@ -1,0 +1,40 @@
+﻿
+using CyberdyneBankAtm.Api.Extensions;
+using CyberdyneBankAtm.Api.Infrastructure;
+using CyberdyneBankAtm.Application.Transactions.Transfer;
+using CyberdyneBankAtm.Domain.Transactions;
+using MediatR;
+
+namespace CyberdyneBankAtm.Api.Endpoints.Transactions
+{
+    public class CreateTransfer : IEndpoint
+    {
+        public sealed class Request
+        {
+            public Guid AccountId { get; set; } // The account this transaction is for
+            public Guid? RelatedAccountId { get; set; } // The *other* account in a transfer (optional)
+            public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
+            public decimal Amount { get; set; }
+            public string Description { get; set; }
+            public DateTime CreatedOn { get; set; }
+        }
+        public void MapEndpoint(IEndpointRouteBuilder app)
+        {
+            app.MapPost("transactions/transfers", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+                {
+                    var command = new CreateTransferCommand()
+                    {
+                        Amount = request.Amount,
+                        Description = request.Description,
+                        AccountId = request.AccountId,
+                        RelatedAccountId = request.RelatedAccountId
+                    };
+
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.Match(Results.Ok, CustomResults.Problem);
+                })
+                .WithTags(Tags.Transactions);
+        }
+    }
+}

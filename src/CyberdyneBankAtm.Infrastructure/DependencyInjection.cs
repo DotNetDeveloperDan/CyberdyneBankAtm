@@ -1,5 +1,5 @@
 ﻿using CyberdyneBankAtm.Application.Abstractions.Data;
-using CyberdyneBankAtm.Infrastructure.Database.Data;
+using CyberdyneBankAtm.Infrastructure.Database;
 using CyberdyneBankAtm.Infrastructure.Time;
 using CyberdyneBankAtm.SharedKernel;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,5 @@
-﻿using CyberdyneBankAtm.SharedKernel;
+﻿using CyberdyneBankAtm.Domain.Accounts;
+using CyberdyneBankAtm.SharedKernel;
 
 namespace CyberdyneBankAtm.Domain.Transactions;
 
@@ -10,4 +11,5 @@ public class Transaction : Entity
     public decimal Amount { get; set; }
     public string Description { get; set; }
     public DateTime CreatedOn { get; set; }
+    public Account Account { get; set; }
 }

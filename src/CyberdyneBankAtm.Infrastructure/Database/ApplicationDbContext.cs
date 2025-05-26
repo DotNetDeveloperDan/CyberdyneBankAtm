@@ -6,7 +6,7 @@ using CyberdyneBankAtm.SharedKernel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CyberdyneBankAtm.Infrastructure.Database.Data;
+namespace CyberdyneBankAtm.Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IPublisher publisher)
     : DbContext(options), IApplicationDbContext

@@ -1,4 +1,4 @@
-﻿namespace CyberdyneBankAtm.Infrastructure.Database.Data;
+﻿namespace CyberdyneBankAtm.Infrastructure.Database;
 
 internal static class Schemas
 {

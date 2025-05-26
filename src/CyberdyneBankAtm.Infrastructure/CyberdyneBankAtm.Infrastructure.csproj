@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Data\Migrations\" />
+    <Folder Include="Database\Migrations\" />
     <Folder Include="Database\Repositories\" />
-    <Folder Include="Accounts\" />
-    <Folder Include="Transactions\" />
-    <Folder Include="Users\" />
   </ItemGroup>
 
   <ItemGroup>

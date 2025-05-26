@@ -1,4 +1,4 @@
-﻿using CyberdyneBankAtm.Infrastructure.Database.Data;
+﻿using CyberdyneBankAtm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace CyberdyneBankAtm.Api.Extensions;

@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\Transactions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CyberdyneBankAtm.Application\CyberdyneBankAtm.Application.csproj" />
     <ProjectReference Include="..\CyberdyneBankAtm.Infrastructure\CyberdyneBankAtm.Infrastructure.csproj" />
     <ProjectReference Include="..\CyberdyneBankAtm.SharedKernel\CyberdyneBankAtm.SharedKernel.csproj" />
