@@ -12,12 +12,9 @@ internal sealed class GetUserByIdQueryHandler(IApplicationDbContext context, IUs
 {
     public async Task<Result<UserResponse>> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
-        if (query.UserId != userContext.UserId)
-        {
-            return Result.Failure<UserResponse>(UserErrors.Unauthorized());
-        }
+        if (query.UserId != userContext.UserId) return Result.Failure<UserResponse>(UserErrors.Unauthorized());
 
-        UserResponse? user = await context.Users
+        var user = await context.Users
             .Where(u => u.Id == query.UserId)
             .Select(u => new UserResponse
             {
@@ -28,10 +25,7 @@ internal sealed class GetUserByIdQueryHandler(IApplicationDbContext context, IUs
             })
             .SingleOrDefaultAsync(cancellationToken);
 
-        if (user is null)
-        {
-            return Result.Failure<UserResponse>(UserErrors.NotFound(query.UserId));
-        }
+        if (user is null) return Result.Failure<UserResponse>(UserErrors.NotFound(query.UserId));
 
         return user;
     }

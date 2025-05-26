@@ -9,6 +9,6 @@ public sealed record TransactionCompletedDomainEvent(
     decimal Amount,
     TransactionType TransactionType,
     string? Description = null,
-    Guid? RelatedAccountId = null,     // for transfers; null for deposit/withdraw
-    Guid? TransferId = null            // same for both TransferIn and TransferOut, enables grouping
+    Guid? RelatedAccountId = null, // for transfers; null for deposit/withdraw
+    Guid? TransferId = null // same for both TransferIn and TransferOut, enables grouping
 ) : IDomainEvent;

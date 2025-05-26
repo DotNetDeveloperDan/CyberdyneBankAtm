@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\Accounts\" />
     <Folder Include="Endpoints\Transactions\" />
   </ItemGroup>
 

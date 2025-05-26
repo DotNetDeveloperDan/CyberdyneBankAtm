@@ -4,6 +4,13 @@ namespace CyberdyneBankAtm.Domain.Transactions;
 
 public static class TransactionErrors
 {
+    public static Error NotFound(Guid transactionId)
+    {
+        return Error.NotFound(
+            "Transaction.NotFound",
+            $"The transaction with the Id = '{transactionId}' was not found");
+    }
+
     public static Error AccountNotFound(Guid accountId)
     {
         return Error.NotFound(

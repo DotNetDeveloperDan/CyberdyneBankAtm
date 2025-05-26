@@ -12,7 +12,7 @@ internal sealed class GetUserByEmailQueryHandler(IApplicationDbContext context, 
 {
     public async Task<Result<UserResponse>> Handle(GetUserByEmailQuery query, CancellationToken cancellationToken)
     {
-        UserResponse? user = await context.Users
+        var user = await context.Users
             .Where(u => u.Email == query.Email)
             .Select(u => new UserResponse
             {
@@ -23,16 +23,8 @@ internal sealed class GetUserByEmailQueryHandler(IApplicationDbContext context, 
             })
             .SingleOrDefaultAsync(cancellationToken);
 
-        if (user is null)
-        {
-            return Result.Failure<UserResponse>(UserErrors.NotFoundByEmail);
-        }
+        if (user is null) return Result.Failure<UserResponse>(UserErrors.NotFoundByEmail);
 
-        if (user.Id != userContext.UserId)
-        {
-            return Result.Failure<UserResponse>(UserErrors.Unauthorized());
-        }
-
-        return user;
+        return user.Id != userContext.UserId ? Result.Failure<UserResponse>(UserErrors.Unauthorized()) : user;
     }
 }

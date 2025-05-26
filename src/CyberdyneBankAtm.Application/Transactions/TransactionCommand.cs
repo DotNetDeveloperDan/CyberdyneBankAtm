@@ -1,6 +1,4 @@
-﻿using CyberdyneBankAtm.Domain.Transactions;
-
-namespace CyberdyneBankAtm.Application.Transactions;
+﻿namespace CyberdyneBankAtm.Application.Transactions;
 
 public abstract class TransactionCommand
 {

@@ -1,5 +1,4 @@
-﻿
-using CyberdyneBankAtm.SharedKernel;
+﻿using CyberdyneBankAtm.SharedKernel;
 
 namespace CyberdyneBankAtm.Api.Infrastructure;
 
@@ -7,10 +6,7 @@ public static class CustomResults
 {
     public static IResult Problem(Result result)
     {
-        if (result.IsSuccess)
-        {
-            throw new InvalidOperationException();
-        }
+        if (result.IsSuccess) throw new InvalidOperationException();
 
         return Results.Problem(
             title: GetTitle(result.Error),
@@ -19,8 +15,9 @@ public static class CustomResults
             statusCode: GetStatusCode(result.Error.Type),
             extensions: GetErrors(result));
 
-        static string GetTitle(Error error) =>
-            error.Type switch
+        static string GetTitle(Error error)
+        {
+            return error.Type switch
             {
                 ErrorType.Validation => error.Code,
                 ErrorType.Problem => error.Code,
@@ -28,9 +25,11 @@ public static class CustomResults
                 ErrorType.Conflict => error.Code,
                 _ => "Server failure"
             };
+        }
 
-        static string GetDetail(Error error) =>
-            error.Type switch
+        static string GetDetail(Error error)
+        {
+            return error.Type switch
             {
                 ErrorType.Validation => error.Description,
                 ErrorType.Problem => error.Description,
@@ -38,9 +37,11 @@ public static class CustomResults
                 ErrorType.Conflict => error.Description,
                 _ => "An unexpected error occurred"
             };
+        }
 
-        static string GetType(ErrorType errorType) =>
-            errorType switch
+        static string GetType(ErrorType errorType)
+        {
+            return errorType switch
             {
                 ErrorType.Validation => "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 ErrorType.Problem => "https://tools.ietf.org/html/rfc7231#section-6.5.1",
@@ -48,22 +49,22 @@ public static class CustomResults
                 ErrorType.Conflict => "https://tools.ietf.org/html/rfc7231#section-6.5.8",
                 _ => "https://tools.ietf.org/html/rfc7231#section-6.6.1"
             };
+        }
 
-        static int GetStatusCode(ErrorType errorType) =>
-            errorType switch
+        static int GetStatusCode(ErrorType errorType)
+        {
+            return errorType switch
             {
                 ErrorType.Validation => StatusCodes.Status400BadRequest,
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
                 _ => StatusCodes.Status500InternalServerError
             };
+        }
 
         static Dictionary<string, object?>? GetErrors(Result result)
         {
-            if (result.Error is not ValidationError validationError)
-            {
-                return null;
-            }
+            if (result.Error is not ValidationError validationError) return null;
 
             return new Dictionary<string, object?>
             {
