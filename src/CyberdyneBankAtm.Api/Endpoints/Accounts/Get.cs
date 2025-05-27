@@ -10,7 +10,7 @@ public class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("accounts", async (Guid userId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("accounts", async (int userId, ISender sender, CancellationToken cancellationToken) =>
             {
                 var request = new GetAccountsQuery(userId);
 
@@ -18,7 +18,8 @@ public class Get : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .WithTags(Tags.Accounts);
+            .WithTags(Tags.Accounts)
+            .WithOpenApi();
 
     }
 }

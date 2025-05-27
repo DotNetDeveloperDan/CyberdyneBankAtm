@@ -9,7 +9,7 @@ public class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("transactions", async (Guid accountId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("transactions", async (int accountId, ISender sender, CancellationToken cancellationToken) =>
             {
                 var request = new GetTransactionsQuery(accountId);
 
@@ -17,6 +17,7 @@ public class Get : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .WithTags(Tags.Transactions);
+            .WithTags(Tags.Transactions)
+            .WithOpenApi();
     }
 }

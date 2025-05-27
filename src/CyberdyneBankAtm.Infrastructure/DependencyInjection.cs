@@ -1,4 +1,6 @@
-﻿using CyberdyneBankAtm.Application.Abstractions.Data;
+﻿using CyberdyneBankAtm.Application.Abstractions.Authentication;
+using CyberdyneBankAtm.Application.Abstractions.Data;
+using CyberdyneBankAtm.Infrastructure.Authentication;
 using CyberdyneBankAtm.Infrastructure.Database;
 using CyberdyneBankAtm.Infrastructure.Time;
 using CyberdyneBankAtm.SharedKernel;
@@ -16,7 +18,8 @@ public static class DependencyInjection
     {
         return services
             .AddServices()
-            .AddDatabase(configuration);
+            .AddDatabase(configuration)
+            .AddAuthenticationInternal(configuration);
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)
@@ -36,5 +39,17 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         return services;
+    }
+
+
+    //Method Subset. We Are not using Authentication
+    private static IServiceCollection AddAuthenticationInternal(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserContext, UserContext>();
+        return services;
+
     }
 }

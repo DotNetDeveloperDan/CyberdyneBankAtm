@@ -9,22 +9,22 @@ namespace CyberdyneBankAtm.Application.Transactions.Transfer;
 internal sealed class CreateTransferCommandHandler(
     IApplicationDbContext context,
     IDateTimeProvider dateTimeProvider
-) : ICommandHandler<CreateTransferCommand, Guid>
+) : ICommandHandler<CreateTransferCommand, int>
 {
-    public async Task<Result<Guid>> Handle(CreateTransferCommand command, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateTransferCommand command, CancellationToken cancellationToken)
     {
         var accountFrom = await context.Accounts.FindAsync([command.AccountId], cancellationToken);
 
-        if (accountFrom == null) return Result.Failure<Guid>(TransactionErrors.AccountNotFound(command.AccountId));
+        if (accountFrom == null) return Result.Failure<int>(TransactionErrors.AccountNotFound(command.AccountId));
 
         var accountTo = await context.Accounts.FindAsync([command.RelatedAccountId], cancellationToken);
 
         if (accountTo == null)
-            return Result.Failure<Guid>(
+            return Result.Failure<int>(
                 TransactionErrors.AccountNotFound(command.RelatedAccountId.GetValueOrDefault()));
 
         if (accountFrom.Balance < command.Amount)
-            return Result.Failure<Guid>(TransactionErrors.InsufficientFunds(command.AccountId));
+            return Result.Failure<int>(TransactionErrors.InsufficientFunds(command.AccountId));
 
         var transactionOut = new Transaction
         {

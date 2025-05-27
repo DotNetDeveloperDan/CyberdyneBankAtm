@@ -2,4 +2,4 @@
 
 namespace CyberdyneBankAtm.Application.Transactions.Get;
 
-public sealed record GetTransactionsQuery(Guid AccountId) : IQuery<List<TransactionResponse>>;
+public sealed record GetTransactionsQuery(int AccountId) : IQuery<List<TransactionResponse>>;

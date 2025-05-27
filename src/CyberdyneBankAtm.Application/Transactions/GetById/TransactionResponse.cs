@@ -4,7 +4,7 @@ namespace CyberdyneBankAtm.Application.Transactions.GetById;
 
 public class TransactionResponse
 {
-    public Guid TransactionId { get; set; }
+    public int TransactionId { get; set; }
     public TransactionType TransactionType { get; set; }
     public decimal Amount { get; set; }
     public string? Description { get; set; }

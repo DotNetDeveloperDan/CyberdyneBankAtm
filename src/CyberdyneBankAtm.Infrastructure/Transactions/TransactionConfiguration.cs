@@ -15,9 +15,13 @@ namespace CyberdyneBankAtm.Infrastructure.Transactions
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.Property(t => t.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(t => t.Amount).IsRequired();
+            builder.Property(t => t.Amount).HasColumnType("REAL");
             builder.Property(t => t.Description).HasMaxLength(255);
             builder.Property(t => t.CreatedOn).IsRequired();
+            builder.Property(t => t.CreatedOn).HasColumnType("TEXT");
 
             builder.Property(t => t.TransactionType)
                 .IsRequired()

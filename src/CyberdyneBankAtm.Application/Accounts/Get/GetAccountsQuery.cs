@@ -2,4 +2,4 @@
 
 namespace CyberdyneBankAtm.Application.Accounts.Get;
 
-public sealed record GetAccountsQuery(Guid UserId) : IQuery<List<AccountResponse>>;
+public sealed record GetAccountsQuery(int UserId) : IQuery<List<AccountResponse>>;

@@ -4,7 +4,7 @@ namespace CyberdyneBankAtm.Domain.Accounts;
 
 public static class AccountErrors
 {
-    public static Error NotFound(Guid accountId)
+    public static Error NotFound(int accountId)
     {
         return Error.NotFound(
             "Accounts.NotFound",

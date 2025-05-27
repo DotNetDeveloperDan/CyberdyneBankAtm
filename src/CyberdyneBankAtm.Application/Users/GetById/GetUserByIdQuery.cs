@@ -2,4 +2,4 @@
 
 namespace CyberdyneBankAtm.Application.Users.GetById;
 
-public sealed record GetUserByIdQuery(Guid UserId) : IQuery<UserResponse>;
+public sealed record GetUserByIdQuery(int UserId) : IQuery<UserResponse>;

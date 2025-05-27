@@ -9,8 +9,12 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
     public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.HasKey(a => a.Id);
+        builder.Property(a => a.Id)
+            .ValueGeneratedOnAdd();
         builder.Property(a => a.Balance).IsRequired();
+        builder.Property(a => a.Balance).HasColumnType("REAL");
         builder.Property(a => a.CreatedOn).IsRequired();
+        builder.Property(a => a.CreatedOn).HasColumnType("TEXT");
 
         builder.Property(a => a.AccountType)
             .IsRequired()

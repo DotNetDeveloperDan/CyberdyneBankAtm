@@ -9,7 +9,7 @@ public class GetById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("transactions/{id:guid}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("transactions/{id:int}", async (int id, ISender sender, CancellationToken cancellationToken) =>
             {
                 var request = new GetTransactionByIdQuery(id);
 
@@ -17,6 +17,7 @@ public class GetById : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .WithTags(Tags.Transactions);
+            .WithTags(Tags.Transactions)
+            .WithOpenApi();
     }
 }

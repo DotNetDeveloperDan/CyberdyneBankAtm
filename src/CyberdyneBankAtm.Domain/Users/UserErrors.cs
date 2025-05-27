@@ -12,7 +12,7 @@ public static class UserErrors
         "Users.EmailNotUnique",
         "The provided email is not unique");
 
-    public static Error NotFound(Guid userId)
+    public static Error NotFound(int userId)
     {
         return Error.NotFound(
             "Users.NotFound",

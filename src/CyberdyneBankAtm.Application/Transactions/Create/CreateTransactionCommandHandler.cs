@@ -7,13 +7,13 @@ namespace CyberdyneBankAtm.Application.Transactions.Create;
 
 internal sealed class CreateTransactionCommandHandler(
     IApplicationDbContext context,
-    IDateTimeProvider dateTimeProvider) : ICommandHandler<CreateTransactionCommand, Guid>
+    IDateTimeProvider dateTimeProvider) : ICommandHandler<CreateTransactionCommand, int>
 {
-    public async Task<Result<Guid>> Handle(CreateTransactionCommand command, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateTransactionCommand command, CancellationToken cancellationToken)
     {
         var account = await context.Accounts.FindAsync([command.AccountId], cancellationToken);
 
-        if (account == null) return Result.Failure<Guid>(TransactionErrors.AccountNotFound(command.AccountId));
+        if (account == null) return Result.Failure<int>(TransactionErrors.AccountNotFound(command.AccountId));
 
         var transaction = new Transaction
         {

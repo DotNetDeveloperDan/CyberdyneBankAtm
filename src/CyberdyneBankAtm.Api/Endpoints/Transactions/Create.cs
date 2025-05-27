@@ -24,12 +24,13 @@ internal sealed class Create : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .WithTags(Tags.Transactions);
+            .WithTags(Tags.Transactions)
+            .WithOpenApi();
     }
 
     public sealed class Request
     {
-        public Guid AccountId { get; set; } // The account this transaction is for
+        public int AccountId { get; set; } // The account this transaction is for
         public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
         public decimal Amount { get; set; }
         public string Description { get; set; }

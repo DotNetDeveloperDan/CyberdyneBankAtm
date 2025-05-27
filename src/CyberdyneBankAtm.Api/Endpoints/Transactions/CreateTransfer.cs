@@ -11,8 +11,8 @@ namespace CyberdyneBankAtm.Api.Endpoints.Transactions
     {
         public sealed class Request
         {
-            public Guid AccountId { get; set; } // The account this transaction is for
-            public Guid? RelatedAccountId { get; set; } // The *other* account in a transfer (optional)
+            public int AccountId { get; set; } // The account this transaction is for
+            public int? RelatedAccountId { get; set; } // The *other* account in a transfer (optional)
             public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
             public decimal Amount { get; set; }
             public string Description { get; set; }
@@ -34,7 +34,8 @@ namespace CyberdyneBankAtm.Api.Endpoints.Transactions
 
                     return result.Match(Results.Ok, CustomResults.Problem);
                 })
-                .WithTags(Tags.Transactions);
+                .WithTags(Tags.Transactions)
+                .WithOpenApi();
         }
     }
 }

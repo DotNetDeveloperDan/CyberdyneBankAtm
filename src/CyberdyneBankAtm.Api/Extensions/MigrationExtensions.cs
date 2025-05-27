@@ -1,4 +1,5 @@
-﻿using CyberdyneBankAtm.Infrastructure.Database;
+﻿using CyberdyneBankAtm.Api.Utilities;
+using CyberdyneBankAtm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace CyberdyneBankAtm.Api.Extensions;
@@ -13,5 +14,7 @@ public static class MigrationExtensions
             scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         dbContext.Database.Migrate();
+        //Seed the database if it's empty
+        DbInitializer.Seed(dbContext);
     }
 }
