@@ -7,7 +7,7 @@ A modern, web-based ATM simulator built with Blazor WebAssembly (WASM) and ASP.N
 ## 🚀 Features
 
 - Blazor WebAssembly UI: Fast, responsive, touch-friendly ATM interface.
-- .NET 8 Backend API: Minimal APIs, CQRS, and Clean Architecture structure.
+- .NET 9 Backend API: Minimal APIs, CQRS, and Clean Architecture structure.
 - SQLite Database: Simple, file-based persistence.
 - Transaction Types: Deposit, Withdraw, Transfer (between user’s own accounts).
 - Atomic Balance Updates: Ensures account and transaction integrity.
@@ -30,7 +30,7 @@ A modern, web-based ATM simulator built with Blazor WebAssembly (WASM) and ASP.N
 ## ⚡️ Getting Started
 
 1. **Prerequisites**
-   - .NET 8 SDK
+   - .NET 9 SDK
    - Visual Studio 2022+ or VS Code
 
 2. **Clone the Repository**
