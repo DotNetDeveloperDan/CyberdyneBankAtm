@@ -9,4 +9,6 @@ public class TransactionResponse
     public decimal Amount { get; set; }
     public string? Description { get; set; }
     public DateTime CreatedOn { get; set; }
+    public decimal? CurrentAccountBalance { get; set; }
+
 }

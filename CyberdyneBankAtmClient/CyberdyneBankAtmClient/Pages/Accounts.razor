@@ -1,0 +1,99 @@
+﻿@page "/accounts"
+@using CyberdyneBankAtmClient.Enums
+@using CyberdyneBankAtmClient.Models
+@using CyberdyneBankAtmClient.Services
+@inject IAccountApiService Api
+
+<h3 class="mb-4">Your Accounts</h3>
+
+@if (AccountList == null)
+{
+    <p>Loading accounts...</p>
+}
+else if (!AccountList.Any())
+{
+    <div class="alert alert-info">No accounts found.</div>
+}
+else
+{
+    <div class="accounts-list">
+        @foreach (var account in AccountList)
+        {
+            <a class="account-card-link" href="@($"/accountdetails/{account.AccountId}")">
+                <div class="account-card">
+                    <div>
+                        <span class="account-type">@account.AccountType : @account.AccountId</span>
+                    </div>
+                    <div>
+                        <span class="account-balance">Balance: <b>@account.Balance.ToString("C")</b></span>
+                    </div>
+                    <div class="account-actions">
+                        <a class="btn btn-primary btn-sm" href="@($"/accountdetails/{account.AccountId}")">View</a>
+                        <a class="btn btn-success btn-sm" href="@($"/transact/{account.AccountId}/{(int)TransactionType.Deposit}")">Deposit</a>
+                        <a class="btn btn-danger btn-sm" href="@($"/transact/{account.AccountId}/{(int)TransactionType.Withdraw}")">Withdraw</a>
+                        <a class="btn btn-warning btn-sm" href="@($"/transfer/{account.AccountId}")">Transfer</a>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+}
+
+@code {
+    public List<AccountDto> AccountList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AccountList = (await Api.GetAccountsAsync())?.ToList() ?? [];
+    }
+
+}
+
+<style>
+    .accounts-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .account-card {
+        background: #1a232b;
+        color: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+        padding: 1.5rem 2rem;
+        min-width: 260px;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .account-type {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: .5rem;
+    }
+
+    .account-balance {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .account-actions .btn {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .account-card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        width: fit-content;
+    }
+
+        .account-card-link:hover .account-card {
+            box-shadow: 0 8px 24px rgba(211,47,47,0.17);
+            background: #23272f;
+        }
+</style>

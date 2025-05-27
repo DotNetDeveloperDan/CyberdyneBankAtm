@@ -55,7 +55,7 @@ internal sealed class CreateTransferCommandHandler : ICommandHandler<CreateTrans
                 RelatedAccountId = command.RelatedAccountId,
                 Amount = command.Amount,
                 TransactionType = TransactionType.TransferOut,
-                Description = $"Transferring {command.Amount} out of account {command.AccountId} into account {relatedAccountId}",
+                Description = $"Transferring {command.Amount:C} out of account {command.AccountId} into account {relatedAccountId}",
                 CreatedOn = now
             };
             accountFrom.Balance -= command.Amount;
@@ -78,7 +78,7 @@ internal sealed class CreateTransferCommandHandler : ICommandHandler<CreateTrans
                 RelatedAccountId = command.AccountId,
                 Amount = command.Amount,
                 TransactionType = TransactionType.TransferIn,
-                Description = $"Transferring {command.Amount} into account {relatedAccountId} from account {command.AccountId}",
+                Description = $"Transferring {command.Amount:C} into account {relatedAccountId} from account {command.AccountId}",
                 CreatedOn = now
             };
             accountTo.Balance += command.Amount;

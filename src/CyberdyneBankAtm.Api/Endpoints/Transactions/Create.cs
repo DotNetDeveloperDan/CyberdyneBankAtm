@@ -17,7 +17,7 @@ internal sealed class Create : IEndpoint
                     Amount = request.Amount,
                     Description = request.Description,
                     AccountId = request.AccountId,
-                    Type = request.TransactionType
+                    Type = request.Type
                 };
 
                 var result = await sender.Send(command, cancellationToken);
@@ -31,8 +31,8 @@ internal sealed class Create : IEndpoint
     public sealed class Request
     {
         public int AccountId { get; set; } // The account this transaction is for
-        public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
         public decimal Amount { get; set; }
+        public TransactionType Type { get; set; } // "Deposit", "Withdrawal"
         public string Description { get; set; }
 
     }

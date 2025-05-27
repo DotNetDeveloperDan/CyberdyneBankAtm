@@ -24,21 +24,30 @@ builder.Services.AddEndpointsApiExplorer();
 // register your minimal endpoints helper
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowWasmDev", policy =>
+        policy.WithOrigins("https://localhost:7282") // Blazor WASM port
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 
 var app = builder.Build();
 
 // ────────────────────────────────────────────────────────────────
+//  other minimal endpoints…
 
-
-// if you have controller-based APIs, uncomment:
- app.MapControllers();
-
-// your other minimal endpoints…
-
+app.UseCors("AllowWasmDev");
 app.MapEndpoints();
 
 // ────────────────────────────────────────────────────────────────
 // Dev only: serve the docs
+
+
+
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi();  // /swagger/v1/swagger.json

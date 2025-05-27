@@ -19,7 +19,8 @@ public class GetTransactionsQueryHandler(IApplicationDbContext context)
                     TransactionId = transaction.Id,
                     TransactionType = transaction.TransactionType,
                     Description = transaction.Description,
-                    CreatedOn = transaction.CreatedOn
+                    CreatedOn = transaction.CreatedOn,
+                    CurrentAccountBalance = transaction.CurrentAccountBalance
                 }).ToListAsync(cancellationToken);
 
         return transactions;
