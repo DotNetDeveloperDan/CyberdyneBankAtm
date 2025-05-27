@@ -109,10 +109,4 @@ MIT.
 
 CyberdyneBankAtm is for educational/demo use—no real money, please!
 
-## 🖼️ Screenshot
-
-(Add a screenshot of your Blazor ATM UI here!)
-
----
-
 *CyberdyneBankAtm: Where your funds become self-aware.*
