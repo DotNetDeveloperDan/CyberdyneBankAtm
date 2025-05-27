@@ -24,4 +24,28 @@ public static class TransactionErrors
             "Transaction.Account.Insf",
             $"The account with the Id = '{accountId}' does not have sufficient funds");
     }
+    public static Error ConcurrencyError() =>
+        Error.Problem(
+            "Transaction.ConcurrencyError",
+            "A concurrency conflict occurred while processing the transaction.");
+
+    public static Error DatabaseError() =>
+        Error.Problem(
+            "Transaction.DatabaseError",
+            "A database error occurred while processing the transaction.");
+
+    public static Error EventPublishError() =>
+        Error.Problem(
+            "Transaction.EventPublishError",
+            "An error occurred while publishing domain events for the transaction.");
+
+    public static Error OperationCanceled() =>
+        Error.Problem(
+            "Transaction.OperationCanceled",
+            "The transaction operation was canceled.");
+
+    public static Error UnknownError() =>
+        Error.Problem(
+            "Transaction.UnknownError",
+            "An unexpected error occurred while processing the transaction.");
 }

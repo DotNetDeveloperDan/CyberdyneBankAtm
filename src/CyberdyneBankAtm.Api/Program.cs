@@ -9,8 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ────────────────────────────────────────────────────────────────
 // Serilog
-builder.Host.UseSerilog((ctx, lc) =>
-    lc.ReadFrom.Configuration(ctx.Configuration));
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 // ────────────────────────────────────────────────────────────────
 // Your services
@@ -42,8 +41,15 @@ app.MapEndpoints();
 // Dev only: serve the docs
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi();   // /swagger/v1/swagger.json
-    app.UseSwaggerUi(); // /swagger
+    app.UseOpenApi();  // /swagger/v1/swagger.json
+    app.UseSwaggerUi(settings =>
+    {
+        // sort each tag’s operations alphabetically by path
+        settings.OperationsSorter = "alpha";
+        // sort the tag groups alphabetically
+        settings.TagsSorter = "alpha";
+    });
+    // /swagger
     app.ApplyMigrations();
 
     app.UseDeveloperExceptionPage();

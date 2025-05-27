@@ -22,7 +22,7 @@ internal sealed class Create : IEndpoint
 
                 var result = await sender.Send(command, cancellationToken);
 
-                return result.Match(Results.Ok, CustomResults.Problem);
+                return result.Match(Results.NoContent, CustomResults.Problem);
             })
             .WithTags(Tags.Transactions)
             .WithOpenApi();
@@ -34,6 +34,6 @@ internal sealed class Create : IEndpoint
         public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
         public decimal Amount { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedOn { get; set; }
+
     }
 }

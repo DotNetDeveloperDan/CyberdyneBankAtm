@@ -10,5 +10,5 @@ public sealed record TransactionCompletedDomainEvent(
     TransactionType TransactionType,
     string? Description = null,
     int? RelatedAccountId = null, // for transfers; null for deposit/withdraw
-    int? TransferId = null // same for both TransferIn and TransferOut, enables grouping
+    decimal? CurrentAccountBalance = null
 ) : IDomainEvent;

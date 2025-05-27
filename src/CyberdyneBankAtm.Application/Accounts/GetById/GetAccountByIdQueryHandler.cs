@@ -1,25 +1,69 @@
-﻿using CyberdyneBankAtm.Application.Abstractions.Data;
+﻿// GetAccountByIdQueryHandler.cs
+using System.Data.Common;
+using CyberdyneBankAtm.Application.Abstractions.Data;
 using CyberdyneBankAtm.Application.Abstractions.Messaging;
 using CyberdyneBankAtm.Domain.Accounts;
 using CyberdyneBankAtm.SharedKernel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CyberdyneBankAtm.Application.Accounts.GetById;
 
-public class GetAccountByIdQueryHandler(IApplicationDbContext context)
-    : IQueryHandler<GetAccountByIdQuery, AccountResponse>
+internal sealed class GetAccountByIdQueryHandler : IQueryHandler<GetAccountByIdQuery, AccountResponse>
 {
-    public async Task<Result<AccountResponse>> Handle(GetAccountByIdQuery query, CancellationToken cancellationToken)
-    {
-        var account = await context.Accounts
-            .Where(account => account.Id == query.AccountId).Select(account => new AccountResponse
-            {
-                Balance = account.Balance,
-                AccountType = account.AccountType,
-                AccountId = account.Id,
-                CreatedOn = account.CreatedOn
-            }).SingleOrDefaultAsync(cancellationToken);
+    private readonly IApplicationDbContext _context;
+    private readonly ILogger<GetAccountByIdQueryHandler> _logger;
 
-        return account ?? Result.Failure<AccountResponse>(AccountErrors.NotFound(query.AccountId));
+    public GetAccountByIdQueryHandler(
+        IApplicationDbContext context,
+        ILogger<GetAccountByIdQueryHandler> logger)
+    {
+        _context = context;
+        _logger = logger;
+    }
+
+    public async Task<Result<AccountResponse>> Handle(
+        GetAccountByIdQuery query,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var account = await _context.Accounts
+                .Where(a => a.Id == query.AccountId)
+                .Select(a => new AccountResponse
+                {
+                    AccountId = a.Id,
+                    Balance = a.Balance,
+                    AccountType = a.AccountType,
+                    CreatedOn = a.CreatedOn
+                })
+                .SingleOrDefaultAsync(cancellationToken);
+
+            return account ?? Result.Failure<AccountResponse>(AccountErrors.NotFound(query.AccountId));
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex,
+                "Multiple accounts found with Id {AccountId}", query.AccountId);
+            return Result.Failure<AccountResponse>(AccountErrors.MultipleFound(query.AccountId));
+        }
+        catch (OperationCanceledException ex)
+        {
+            _logger.LogError(ex,
+                "Retrieval of account {AccountId} was canceled", query.AccountId);
+            return Result.Failure<AccountResponse>(AccountErrors.OperationCanceled());
+        }
+        catch (DbException ex)
+        {
+            _logger.LogError(ex,
+                "Database error retrieving account {AccountId}", query.AccountId);
+            return Result.Failure<AccountResponse>(AccountErrors.DatabaseError());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "Unexpected error retrieving account {AccountId}", query.AccountId);
+            return Result.Failure<AccountResponse>(AccountErrors.UnknownError());
+        }
     }
 }

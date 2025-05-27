@@ -13,10 +13,8 @@ namespace CyberdyneBankAtm.Api.Endpoints.Transactions
         {
             public int AccountId { get; set; } // The account this transaction is for
             public int? RelatedAccountId { get; set; } // The *other* account in a transfer (optional)
-            public TransactionType TransactionType { get; set; } // "Deposit", "Withdrawal"
             public decimal Amount { get; set; }
-            public string Description { get; set; }
-            public DateTime CreatedOn { get; set; }
+
         }
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
@@ -25,14 +23,13 @@ namespace CyberdyneBankAtm.Api.Endpoints.Transactions
                     var command = new CreateTransferCommand()
                     {
                         Amount = request.Amount,
-                        Description = request.Description,
                         AccountId = request.AccountId,
                         RelatedAccountId = request.RelatedAccountId
                     };
 
                     var result = await sender.Send(command, cancellationToken);
 
-                    return result.Match(Results.Ok, CustomResults.Problem);
+                    return result.Match(Results.NoContent, CustomResults.Problem);
                 })
                 .WithTags(Tags.Transactions)
                 .WithOpenApi();

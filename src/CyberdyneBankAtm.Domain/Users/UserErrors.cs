@@ -25,4 +25,23 @@ public static class UserErrors
             "Users.Unauthorized",
             "You are not authorized to perform this action.");
     }
+    public static Error MultipleUsersFound(string email) =>
+        Error.Failure(
+            "Users.MultipleFoundByEmail",
+            $"Multiple users were found with the email '{email}'.");
+
+    public static Error DatabaseError() =>
+        Error.Failure(
+            "Users.DatabaseError",
+            "A database error occurred while retrieving the user.");
+
+    public static Error OperationCanceled() =>
+        Error.Failure(
+            "Users.OperationCanceled",
+            "The operation was canceled before completion.");
+
+    public static Error UnknownError() =>
+        Error.Failure(
+            "Users.UnknownError",
+            "An unexpected error occurred while retrieving the user.");
 }
