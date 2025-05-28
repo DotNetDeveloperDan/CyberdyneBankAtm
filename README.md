@@ -6,7 +6,6 @@ A modern, web-based ATM simulator built with Blazor WebAssembly (WASM) and ASP.N
 
 ## 🚀 Features
 
-- Blazor WebAssembly UI: Fast, responsive, touch-friendly ATM interface.
 - .NET 9 Backend API: Minimal APIs, CQRS, and Clean Architecture structure.
 - SQLite Database: Simple, file-based persistence.
 - Transaction Types: Deposit, Withdraw, Transfer (between user’s own accounts).
@@ -63,6 +62,8 @@ Open `https://localhost:7282` in your browser.
 
 Use the ATM interface to view accounts, deposit, withdraw, or transfer funds.
 
+The ATM interface is in a separate repo and can be found here: [https://github.com/DotNetDeveloperDan/CyberdyneBankAtmClient](https://github.com/DotNetDeveloperDan/CyberdyneBankAtmClient)
+
 All operations update balances and show transaction history in real time.
 
 ## 🔐 CORS Setup (Development)
@@ -82,7 +83,6 @@ builder.Services.AddCors(options =>
 
 ## 👨‍💻 Tech Stack
 
-- **Frontend:** Blazor WebAssembly (.NET 9)
 - **Backend:** ASP.NET Core Minimal API (.NET 9)
 - **Database:** SQLite via EF Core
 - **Architecture:** Clean Architecture, CQRS, Dependency Injection
